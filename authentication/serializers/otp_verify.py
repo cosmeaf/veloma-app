@@ -1,5 +1,3 @@
-# authentication/serializers/otp_verify.py
-
 from rest_framework import serializers
 
 

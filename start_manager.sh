@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-
+sudo truncate -s 0 /var/log/veloma/*.log 2>/dev/null || true
 # =========================
 # CONFIGURAÇÃO
 # =========================

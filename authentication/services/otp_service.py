@@ -1,5 +1,3 @@
-# authentication/services/otp_service.py
-
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
@@ -22,21 +20,18 @@ class OTPService:
 
         otp = (
             OtpCode.objects
-            .filter(user=user, code=code, is_used=False)
+            .filter(user=user, is_used=False)
             .order_by("-created_at")
             .first()
         )
 
         if not otp:
-            raise ValidationError("Código incorreto ou não encontrado.")
+            raise ValidationError("Código não encontrado.")
 
-        if not otp.is_valid():
-            raise ValidationError("Código expirado.")
+        if not otp.verify(code):
+            raise ValidationError("Código inválido ou expirado.")
 
         with transaction.atomic():
-
-            otp.is_used = True
-            otp.save(update_fields=["is_used"])
 
             reset_token = ResetPasswordToken.objects.create(user=user)
 

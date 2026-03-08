@@ -14,7 +14,7 @@ class EmailRenderer:
     def render(template_path, context):
 
         try:
-            html = render_to_string(f"{template_path}.html", context)
+            html = render_to_string(f"emails/{template_path}.html", context)
 
         except Exception as exc:
 
@@ -25,11 +25,11 @@ class EmailRenderer:
             )
 
             raise EmailTemplateError(
-                f"Template não encontrado: {template_path}.html"
+                f"Erro ao renderizar template: {template_path}.html"
             ) from exc
 
         try:
-            text = render_to_string(f"{template_path}.txt", context)
+            text = render_to_string(f"emails/{template_path}.txt", context)
 
         except Exception:
             text = strip_tags(html)

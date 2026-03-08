@@ -1,5 +1,3 @@
-# authentication/services/auth_service.py
-
 import logging
 from datetime import datetime, UTC
 
@@ -10,15 +8,11 @@ from authentication.dto.user_dto import UserDTO
 from authentication.services.session_service import SessionService
 from authentication.services.token_service import TokenService
 from authentication.services.ip_intelligence_service import IPIntelligenceService
-
-from services.auth.login_attempt_service import LoginAttemptService
-from services.auth.login_audit_service import register_login_event
-from services.auth.login_security_service import is_suspicious_login
+from authentication.services.login_attempt_service import LoginAttemptService
+from authentication.services.login_audit_service import LoginAuditService
+from authentication.services.login_security_service import LoginSecurityService
 
 from services.middleware.request_context import get_login_context
-from services.email.email_service import EmailService
-
-from authentication.models.user_session import UserSession
 
 logger = logging.getLogger(__name__)
 
@@ -26,24 +20,36 @@ logger = logging.getLogger(__name__)
 class AuthService:
 
     @staticmethod
-    def login(email, password, request):
-
-        # =========================================================
-        # CONTEXTO DO REQUEST
-        # =========================================================
-
-        ctx = get_login_context(request) or {}
-
-        ip = ctx.get("ip")
-        country = ctx.get("country")
+    def login(email: str, password: str, request):
 
         email = (email or "").lower().strip()
 
-        # =========================================================
-        # PROTEÇÃO BRUTE FORCE
-        # =========================================================
+        # -------------------------------------------------
+        # REQUEST CONTEXT
+        # -------------------------------------------------
+
+        ctx = get_login_context(request) or {}
+        ip = ctx.get("ip")
+
+        # -------------------------------------------------
+        # IP INTELLIGENCE
+        # -------------------------------------------------
+
+        if ip:
+            try:
+                ctx.update(IPIntelligenceService.investigate(ip))
+            except Exception:
+                logger.exception("Falha ao investigar IP")
+
+        # -------------------------------------------------
+        # BRUTE FORCE PROTECTION
+        # -------------------------------------------------
 
         LoginAttemptService.guard(email=email, ip=ip)
+
+        # -------------------------------------------------
+        # AUTHENTICATION
+        # -------------------------------------------------
 
         user = authenticate(
             request=request,
@@ -54,111 +60,79 @@ class AuthService:
         if not user:
 
             LoginAttemptService.register_failure(email=email, ip=ip)
-            register_login_event(request, None, False)
+
+            LoginAuditService.register(
+                request=request,
+                user=None,
+                success=False,
+            )
 
             raise ValidationError("Credenciais inválidas.")
 
         if not user.is_active:
 
-            register_login_event(request, user, False)
+            LoginAuditService.register(
+                request=request,
+                user=user,
+                success=False,
+            )
 
             raise ValidationError("Conta desativada.")
 
         LoginAttemptService.reset_attempts(email=email, ip=ip)
-        register_login_event(request, user, True)
 
-        # =========================================================
-        # LIMITE DE SESSÕES
-        # =========================================================
+        # -------------------------------------------------
+        # CREATE TOKENS
+        # -------------------------------------------------
 
-        max_sessions = getattr(user, "max_sessions", 3)
+        tokens = TokenService.create(user, None)
 
-        active_sessions = UserSession.objects.filter(
-            user=user,
-            is_active=True,
-        ).count()
-
-        if active_sessions >= max_sessions:
-            raise ValidationError("Limite de sessões simultâneas atingido.")
-
-        # =========================================================
-        # IP INTELLIGENCE
-        # =========================================================
-
-        if ip:
-            try:
-                ip_data = IPIntelligenceService.investigate(ip)
-                if ip_data:
-                    ctx.update(ip_data)
-            except Exception:
-                logger.exception("Falha ao investigar IP")
-
-        # =========================================================
-        # CRIAÇÃO DA SESSÃO
-        # =========================================================
+        # -------------------------------------------------
+        # CREATE SESSION
+        # -------------------------------------------------
 
         session = SessionService.create(
             user=user,
-            jti="temp",
+            jti=tokens.get("jti"),
             ctx=ctx,
             request=request,
         )
 
-        tokens = TokenService.create(user, session.id)
+        # -------------------------------------------------
+        # LOGIN AUDIT
+        # -------------------------------------------------
 
-        if tokens and "jti" in tokens:
-            session.token_jti = tokens["jti"]
-            session.save(update_fields=["token_jti"])
+        LoginAuditService.register(
+            request=request,
+            user=user,
+            success=True,
+        )
 
-        # =========================================================
-        # CONTEXTO PARA EMAIL
-        # =========================================================
-
-        email_ctx = {
-            "user": user,
-            "user_id": user.id,
-            "user_email": user.email,
-            "session_id": session.id,
-            "token_jti": session.token_jti,
-            "login_time": datetime.now(UTC),
-            **ctx,
-        }
-
-        logger.info("Login context: %s", email_ctx)
-
-        # =========================================================
-        # EMAIL DE LOGIN
-        # =========================================================
+        # -------------------------------------------------
+        # SECURITY CHECKS
+        # -------------------------------------------------
 
         try:
-            EmailService.send(
-                template_key="login_alert",
-                to=[user.email],
-                context=email_ctx,
+
+            LoginSecurityService.check(
+                user,
+                {
+                    "user": user,
+                    "user_id": user.id,
+                    "user_email": user.email,
+                    "session_id": session.id,
+                    "token_jti": tokens.get("jti"),
+                    "login_time": datetime.now(UTC),
+                    **ctx,
+                }
             )
-        except Exception:
-            logger.exception("Falha ao enviar email")
-
-        # =========================================================
-        # ALERTA DE LOGIN SUSPEITO
-        # =========================================================
-
-        try:
-
-            if is_suspicious_login(user, ip, country):
-
-                EmailService.send(
-                    template_key="security_login_alert",
-                    to=[user.email],
-                    context=email_ctx,
-                )
 
         except Exception:
-            logger.exception("Falha ao enviar alerta de segurança")
+            logger.exception("Falha ao executar verificação de segurança")
 
-        # =========================================================
+        # -------------------------------------------------
         # RESPONSE
-        # =========================================================
+        # -------------------------------------------------
 
         return {
             "access": tokens["access"],

@@ -1,187 +1,69 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bem-vindo à Veloma</title>
-    <style>
-        /* RESET & BASE */
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background-color: #f1f5f9; 
-            margin: 0; 
-            padding: 0; 
-            color: #334155; 
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        /* CONTAINER PRINCIPAL (O CARD) */
-        .email-wrapper {
-            background-color: #ffffff;
-            max-width: 600px;
-            margin: 40px auto;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e2e8f0;
-        }
+{% extends "emails/base.html" %}
 
-        /* HEADER */
-        .header { 
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%); 
-            padding: 40px 20px; 
-            text-align: center; 
-            color: #ffffff;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            display: block;
-        }
-        .header h1 { 
-            margin: 0; 
-            color: #ffffff; 
-            font-size: 26px; 
-            font-weight: 600; 
-        }
-        .header p { 
-            margin: 10px 0 0; 
-            color: #cbd5e1; 
-            font-size: 15px; 
-        }
+{% block title %}Bem-vindo à Veloma{% endblock %}
+{% block preheader %}Sua conta foi criada com sucesso.{% endblock %}
 
-        /* CONTEÚDO PRINCIPAL */
-        .content { padding: 50px 40px; text-align: center; }
-        .content h2 { 
-            font-size: 22px; 
-            color: #0f172a; 
-            margin: 0 0 20px; 
-            font-weight: 600;
-        }
-        .content p { 
-            font-size: 16px; 
-            line-height: 1.7; 
-            color: #475569; 
-            margin: 0 0 25px; 
-        }
+{% block header_icon %}
+<!-- Ícone de Check (Sucesso) -->
+<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:0 auto;">
+  <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 4L12 14.01L9 11.01" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+{% endblock %}
 
-        /* CAIXA DE DADOS DO USUÁRIO */
-        .data-box {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 25px;
-            margin: 35px auto;
-            text-align: left;
-            max-width: 480px;
-        }
-        .data-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 0;
-        }
-        .data-item:last-child { border-bottom: none; }
-        .data-label {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            font-weight: 600;
-        }
-        .data-value {
-            font-size: 15px;
-            color: #0f172a;
-            font-weight: 500;
-            text-align: right;
-        }
+{% block header_subtitle %}Bem-vindo a bordo{% endblock %}
+{% block heading %}Cadastro Confirmado{% endblock %}
 
-        /* FOOTER */
-        .footer { 
-            background-color: #f1f5f9; 
-            padding: 30px 20px; 
-            text-align: center; 
-            border-top: 1px solid #e2e8f0; 
-        }
-        .footer p { 
-            margin: 0 0 10px; 
-            font-size: 13px; 
-            color: #64748b; 
-        }
-        .footer a { color: #334155; text-decoration: none; font-weight: 500; }
-        .footer a:hover { text-decoration: underline; }
-        .legal { font-size: 11px; color: #94a3b8; margin-top: 20px; }
+{% block content %}
+<p style="margin:0 0 24px; color:#475569; font-size:16px; line-height:1.6;">
+  Olá, <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+</p>
+<p style="margin:0 0 32px; color:#475569; font-size:16px; line-height:1.6;">
+  É um prazer ter você conosco. Sua conta na Veloma foi criada com sucesso. Abaixo, repetimos seus dados cadastrais para seu controle:
+</p>
+{% endblock %}
 
-        /* RESPONSIVIDADE */
-        @media only screen and (max-width: 600px) {
-            .email-wrapper { width: 100% !important; margin: 0 !important; border-radius: 0 !important; border: none; }
-            .content { padding: 40px 25px !important; }
-            .data-item { flex-direction: column; gap: 5px; text-align: left; }
-            .data-value { text-align: left; }
-            .header h1 { font-size: 22px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="email-wrapper">
-        <!-- HEADER -->
-        <div class="header">
-            <span class="logo">VELOMA</span>
-            <!-- Correção: Removida a lógica {% if %} e utilizado a tag direta -->
-            <h1>Bem-vindo, {{ user.first_name }}!</h1>
-            <p>Sua conta está pronta para uso</p>
-        </div>
+{% block details_box %}
+<!-- Aqui reutilizamos o visual da caixa de dados, mas com informações do usuário -->
+<table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-box">
+  <tr>
+    <td style="padding: 24px;">
+      
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-row">
+        <tr>
+          <td class="data-label">Nome Completo</td>
+          <td class="data-value">{{ user.first_name }} {{ user.last_name }}</td>
+        </tr>
+      </table>
 
-        <!-- CORPO DO E-MAIL -->
-        <div class="content">
-            <h2>Cadastro Confirmado com Sucesso</h2>
-            
-            <p>
-                Preparamos nossa plataforma para recebê-lo. Agora você faz parte da comunidade <strong>Veloma Contabilidade</strong>.
-                Abaixo estão os detalhes da sua nova conta para fins de registro:
-            </p>
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-row">
+        <tr>
+          <td class="data-label" style="padding-top: 4px;">E-mail</td>
+          <td class="data-value" style="padding-top: 4px;">{{ user.email }}</td>
+        </tr>
+      </table>
+      
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="data-label" style="padding-top: 4px;">Data de Cadastro</td>
+          <td class="data-value" style="padding-top: 4px;">{{ login_time|date:"d/m/Y H:i" }}</td>
+        </tr>
+      </table>
 
-            <div class="data-box">
-                <div class="data-item">
-                    <span class="data-label">Nome Completo: </span>
-                    <!-- Correção: Tags user.first_name e user.last_name são válidas -->
-                    <span class="data-value">{{ user.first_name }} {{ user.last_name }}</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">E-mail de Acesso: </span>
-                    <!-- Correção: Tag user.email é válida -->
-                    <span class="data-value">{{ user.email }}</span>
-                </div>
-                <div class="data-item">
-                    <!-- Correção: Substituído {% now %} por {{ login_time }} pois é a tag de tempo disponível na lista -->
-                    <span class="data-label">Data/Hora Registro: </span>
-                    <span class="data-value">{{ login_time }}</span>
-                </div>
-            </div>
-            <p>
-                Para garantir a segurança da sua conta, sugerimos que acesse o painel e verifique suas configurações de perfil.
-            </p>
+    </td>
+  </tr>
+</table>
+{% endblock %}
 
-            <p style="font-size: 13px; color: #94a3b8; margin-top: 30px;">
-                Se você não solicitou este cadastro, por favor desconsidere este e-mail.
-            </p>
-        </div>
-
-        <!-- FOOTER -->
-        <div class="footer">
-            <!-- Correção: Ano estático para evitar erro de tag {% now %} não listada -->
-            <p>&copy; 2026 Veloma Contabilidade. Todos os direitos reservados.</p>
-            <p>Entre em contato: <a href="mailto:suporte@velomacontabilidade.com">suporte@velomacontabilidade.com</a></p>
-            
-            <div class="legal">
-                Esta é uma mensagem automática. Por favor, não responda diretamente a este e-mail.
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+{% block action_button %}
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+  <tr>
+    <td align="center" style="border-radius: 6px; background-color: #0f172a; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+      <a href="https://app.veloma.com.br/login" target="_blank" 
+         style="display:inline-block; padding: 16px 32px; color:#ffffff; font-size:16px; font-weight:600; text-decoration:none; letter-spacing: 0.5px;">
+        ACESSAR O PAINEL
+      </a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

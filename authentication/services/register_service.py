@@ -9,7 +9,6 @@ from django.contrib.auth.models import Group
 from services.email.email_service import EmailService
 from authentication.dto.user_dto import UserDTO
 from authentication.services.token_service import TokenService
-from authentication.services.session_service import SessionService
 
 User = get_user_model()
 
@@ -43,7 +42,7 @@ class RegisterService:
                 to=[user.email],
                 context={
                     "user": user,
-                    "year": datetime.now().year
+                    "registered_at": user.date_joined
                 }
             )
 

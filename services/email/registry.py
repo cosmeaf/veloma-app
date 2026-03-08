@@ -13,9 +13,6 @@ EMAIL_TEMPLATES = {}
 
 
 def _generate_subject(name: str) -> str:
-    """
-    Gera um subject simples baseado no nome do template
-    """
     return name.replace("_", " ").capitalize()
 
 
@@ -27,7 +24,7 @@ def _discover_templates():
 
         relative = file.relative_to(base_path)
 
-        template_path = f"emails/{relative.with_suffix('').as_posix()}"
+        template_path = relative.with_suffix("").as_posix()
 
         key = relative.with_suffix("").as_posix().replace("/", "_")
 

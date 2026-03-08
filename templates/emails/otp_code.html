@@ -1,0 +1,13 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+
+<h2>Código de verificação</h2>
+
+<p>Seu código OTP é:</p>
+
+<h1>{{ otp }}</h1>
+
+<p>Este código expira em {{ expires_minutes }} minutos.</p>
+
+{% endblock %}

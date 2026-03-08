@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="format-detection" content="telephone=no">
+  <title>{% block title %}Notificação Veloma{% endblock %}</title>
+  
+  <!-- Pré-header Dinâmico -->
+  <div style="display:none;font-size:1px;color:#f1f5f9;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+    {% block preheader %}Você tem uma nova notificação da Veloma Contabilidade.{% endblock %}
+  </div>
+
+  <style type="text/css">
+    /* RESET & BASE */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; }
+
+    /* UTILITÁRIOS */
+    .container { max-width: 600px; margin: 0 auto; }
+    
+    /* ESTILOS DA CAIXA DE DADOS (Details Box) */
+    .data-box { background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; margin: 32px 0; }
+    .data-label { color: #64748b; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; width: 140px; vertical-align: top; }
+    .data-value { color: #0f172a; font-size: 15px; font-weight: 500; }
+    .data-row { border-bottom: 1px solid #e2e8f0; }
+    .data-row:last-child td { border-bottom: none; }
+
+    /* RESPONSIVIDADE */
+    @media screen and (max-width: 600px) {
+      .container { width: 100% !important; }
+      .header-padding { padding: 30px 20px !important; }
+      .content-padding { padding: 30px 24px !important; }
+      .data-label { display: block; width: 100% !important; margin-bottom: 4px; }
+      .data-value { display: block; width: 100% !important; margin-bottom: 16px; }
+      .data-row { padding-bottom: 12px !important; border-bottom: 1px solid #e2e8f0; margin-bottom: 12px;}
+      h1 { font-size: 22px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f1f5f9;">
+
+  <!-- WRAPPER PRINCIPAL -->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#f1f5f9; padding: 40px 0;">
+    <tr>
+      <td align="center">
+
+        <!-- CARD PRINCIPAL -->
+        <table role="presentation" class="container" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; background-color:#ffffff; border-radius:16px; overflow:hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+
+          <!-- ===== HEADER (Dinâmico) ===== -->
+          <tr>
+            <td class="header-padding" style="background-color: #ffffff; padding: 40px 40px 20px 40px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+              
+              <!-- Ícone (Bloco Preenchido pelos Filhos) -->
+              <div style="margin-bottom: 16px;">
+                {% block header_icon %}
+                <!-- Ícone Padrão (Info) -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:0 auto;">
+                  <circle cx="12" cy="12" r="10" stroke="#0f172a" stroke-width="2"/>
+                  <path d="M12 16V12" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 8H12.01" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {% endblock %}
+              </div>
+
+              <h1 style="margin:0; color:#0f172a; font-size:24px; font-weight:700; letter-spacing: -0.5px;">
+                Veloma Contabilidade
+              </h1>
+              <p style="margin:8px 0 0; color:#64748b; font-size:14px; font-weight: 500;">
+                {% block header_subtitle %}Sistema{% endblock %}
+              </p>
+            </td>
+          </tr>
+
+          <!-- ===== CONTEÚDO ===== -->
+          <tr>
+            <td class="content-padding" style="padding: 40px 40px 40px 40px;">
+
+              <!-- Título Principal -->
+              <h2 style="margin:0 0 16px; color:#0f172a; font-size:22px; font-weight:700;">
+                {% block heading %}Notificação{% endblock %}
+              </h2>
+
+              <!-- Texto Corpo -->
+              {% block content %}{% endblock %}
+
+              <!-- CAIXA DE DADOS DINÂMICA (Security Info ou User Data) -->
+              <!-- Este bloco fica vazio no base. Os filhos preenchem com tabelas. -->
+              {% block details_box %}{% endblock %}
+
+              <!-- Botão de Ação (CTA) -->
+              {% block action_button %}{% endblock %}
+
+            </td>
+          </tr>
+
+          <!-- ===== FOOTER ===== -->
+          <tr>
+            <td style="background-color:#f8fafc; padding: 32px 20px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin:0 0 8px; color:#64748b; font-size:14px; line-height:1.5;">
+                <strong>Veloma Contabilidade Ltda</strong><br>
+                CNPJ 00.000.000/0001-00
+              </p>
+              
+              <p style="margin:16px 0 8px; color:#94a3b8; font-size:12px; line-height:1.5;">
+                Se você não solicitou esta ação, entre em contato:
+                <br>
+                <strong>suporte@velomacontabilidade.com</strong>
+              </p>
+              
+              <p style="margin:0; color:#cbd5e1; font-size:12px;">
+                © 2026 Veloma Contabilidade. Todos os direitos reservados.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- Fim do Container -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
