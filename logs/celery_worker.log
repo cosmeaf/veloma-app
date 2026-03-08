@@ -1,0 +1,51 @@
+[2026-03-06 20:54:16,043: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 20:54:16,050: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 20:54:17,061: INFO/MainProcess] mingle: all alone
+[2026-03-06 20:54:17,077: INFO/MainProcess] celery@srv697040 ready.
+[2026-03-06 20:54:35,109: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 20:54:35,114: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 20:54:36,129: INFO/MainProcess] mingle: all alone
+[2026-03-06 20:54:36,145: INFO/MainProcess] celery@srv697040 ready.
+[2026-03-06 21:14:24,399: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 21:14:24,405: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 21:14:25,415: INFO/MainProcess] mingle: all alone
+[2026-03-06 21:14:25,448: INFO/MainProcess] celery@srv697040 ready.
+[2026-03-06 21:25:05,537: ERROR/MainProcess] Received unregistered task of type 'services.tasks.email_task.send_email_task'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[[{"subject": "Novo login detectado na sua conta", "text": "Veloma Contabilidade\\n\\nNovo login detectado\\n\\nOl\\u00e1 Cosme,\\n\\nDetectamos um novo acesso na sua conta.\\n\\nDetalhes:\\n\\u2022 IP:       185.44.65.171\\n\\u2022 Pa\\u00eds:     Portugal\\n\\u2022 Navegador: Chrome\\n\\u2022 Dispositivo: MacBook\\n\\nSe foi voc\\u00ea, pode ignorar esta mensagem.\\nSe N\\u00c3O foi voc\\u00ea, altere sua senha imediatamente em:\\nhttps://app.veloma.com.br/alterar-senha\\n\\nAtenciosamente,\\nEquipe Veloma Contabilidade\\nN\\u00e3o responda este e-mail.", "html": "<!DOCTYPE html>\\n<html lang=\\"pt-BR\\">\\n<head>\\n  <meta charset=\\"UTF-8\\">\\n  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">\\n  <meta http-equiv=\\"X-UA-Compatible\\" content=\\"IE=edge\\">\\n  <meta name=\\"format-detection\\" content=\\"telephone=no\\">\\n  <title>Novo login detectado - Veloma Contabilidade</title>\\n\\n  <!-- ===== Pr\\u00e9-header (texto invis\\u00edvel que aparece na caixa de... (7674b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'services.tasks.email_task.send_email_task', 'id': '1624167d-f9d8-47e4-9a36-b77da87faf89', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '1624167d-f9d8-47e4-9a36-b77da87faf89', 'parent_id': None, 'argsrepr': '({\'subject\': \'Novo login detectado na sua conta\', \'text\': \'Veloma Contabilidade\n\nNovo login detectado\n\nOlá Cosme,\n\nDetectamos um novo acesso na sua conta.\n\nDetalhes:\n• IP:       185.44.65.171\n• País:     Portugal\n• Navegador: Chrome\n• Dispositivo: MacBook\n\nSe foi você, pode ignorar esta mensagem.\nSe NÃO foi você, altere sua senha imediatamente em:\nhttps://app.veloma.com.br/alterar-senha\n\nAtenciosamente,\nEquipe Veloma Contabilidade\nNão responda este e-mail.\', \'html\': \'<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <meta http-equiv="X-UA-Compatible" content="IE=edge">\n  <meta name="format-detection" content="telephone=no">\n  <title>Novo login detectado - Veloma Contabilidade</title>\n\n  <!-- ===== Pré-header (texto invisível que aparece na caixa de entrada) ===== -->\n  <style type="text/css">\n    #outlook a { padding:0; }\n    body { width:100% !important; margin:0; padding:0; -webkit-font-smoothing: antialiased; }\n   ...\', ...},)', 'kwargsrepr': '{}', 'origin': 'gen563004@srv697040', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "/opt/veloma-app/venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py", line 668, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'services.tasks.email_task.send_email_task'
+[2026-03-06 21:26:01,019: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 21:26:01,025: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 21:26:02,039: INFO/MainProcess] mingle: all alone
+[2026-03-06 21:26:02,077: INFO/MainProcess] celery@srv697040 ready.
+[2026-03-06 21:26:27,802: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 21:26:27,805: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 21:26:28,814: INFO/MainProcess] mingle: all alone
+[2026-03-06 21:26:28,828: INFO/MainProcess] celery@srv697040 ready.
+[2026-03-06 21:27:11,059: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 21:27:11,063: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 21:27:12,074: INFO/MainProcess] mingle: all alone
+[2026-03-06 21:27:12,092: INFO/MainProcess] celery@srv697040 ready.
+[2026-03-06 21:27:35,921: INFO/MainProcess] Connected to redis://127.0.0.1:6380/0
+[2026-03-06 21:27:35,925: INFO/MainProcess] mingle: searching for neighbors
+[2026-03-06 21:27:36,935: INFO/MainProcess] mingle: all alone
+[2026-03-06 21:27:36,952: INFO/MainProcess] celery@srv697040 ready.

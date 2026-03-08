@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="format-detection" content="telephone=no">
+  <title>Segurança: Novo login detectado - Veloma Contabilidade</title>
+  
+  <!-- Pré-header (texto invisível que aparece na notificação do celular/email) -->
+  <div style="display:none;font-size:1px;color:#f1f5f9;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+    Aviso de segurança: Novo acesso detectado em sua conta. Verifique os detalhes abaixo.
+  </div>
+
+  <style type="text/css">
+    /* Reset para Clientes de Email */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; }
+
+    /* Classes Utilitárias */
+    .container { max-width: 600px; margin: 0 auto; }
+    .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
+    
+    /* Responsividade Básica */
+    @media screen and (max-width: 600px) {
+      .container { width: 100% !important; }
+      .header-padding { padding: 30px 20px !important; }
+      .content-padding { padding: 30px 24px !important; }
+      .data-label { display: block; width: 100% !important; margin-bottom: 4px; color: #64748b; }
+      .data-value { display: block; width: 100% !important; margin-bottom: 16px; color: #0f172a; }
+      .data-row { border-bottom: 1px solid #e2e8f0; padding-bottom: 12px !important; }
+      .data-row:last-child { border-bottom: none; padding-bottom: 0 !important; }
+      h1 { font-size: 22px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f1f5f9;">
+
+  <!-- Wrapper Principal -->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#f1f5f9; padding: 40px 0;">
+    <tr>
+      <td align="center">
+
+        <!-- Container do Email -->
+        <table role="presentation" class="container" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; background-color:#ffffff; border-radius:16px; overflow:hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+
+          <!-- ===== HEADER ===== -->
+          <tr>
+            <td class="header-padding" style="background-color: #ffffff; padding: 40px 40px 20px 40px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+              
+              <!-- Logo / Ícone de Segurança (SVG Inline) -->
+              <div style="margin-bottom: 16px;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:0 auto;">
+                  <path d="M12 22C16.4183 22 20 18.4183 20 14V6L12 3L4 6V14C4 18.4183 7.58172 22 12 22Z" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 8V12" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 16H12.01" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+
+              <h1 style="margin:0; color:#0f172a; font-size:24px; font-weight:700; letter-spacing: -0.5px;">
+                Veloma Contabilidade
+              </h1>
+              <p style="margin:8px 0 0; color:#64748b; font-size:14px; font-weight: 500;">
+                Segurança da Conta
+              </p>
+            </td>
+          </tr>
+
+          <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+          <tr>
+            <td class="content-padding" style="padding: 40px 40px 40px 40px;">
+
+              <h2 style="margin:0 0 16px; color:#0f172a; font-size:22px; font-weight:700;">
+                Novo login detectado
+              </h2>
+
+              <p style="margin:0 0 24px; color:#475569; font-size:16px; line-height:1.6;">
+                Olá <strong>{{ user.first_name }} {{ user.last_name }}</strong>,
+              </p>
+
+              <p style="margin:0 0 32px; color:#475569; font-size:16px; line-height:1.6;">
+                Identificamos um novo acesso ao painel da Veloma. Abaixo estão os detalhes técnicos deste dispositivo para sua conferência.
+              </p>
+
+              <!-- CAIXA DE DETALHES (Design em Card) -->
+              <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color:#f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 32px;">
+                <tr>
+                  <td style="padding: 24px;">
+                    
+                    <!-- Linha 1: Data/Hora -->
+                    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-row">
+                      <tr>
+                        <td class="data-label" style="color:#64748b; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; width: 120px; vertical-align: top;">Data/Hora</td>
+                        <td class="data-value" style="color:#0f172a; font-size:15px; font-weight:500;">{{ login_time }}</td>
+                      </tr>
+                    </table>
+
+                    <!-- Linha 2: IP -->
+                    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-row">
+                      <tr>
+                        <td class="data-label" style="color:#64748b; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; width: 120px; vertical-align: top; padding-top: 4px;">Endereço IP</td>
+                        <td class="data-value" style="color:#0f172a; font-size:15px; font-weight:500; padding-top: 4px;">{{ ip }}</td>
+                      </tr>
+                    </table>
+
+                    <!-- Linha 3: Localização -->
+                    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-row">
+                      <tr>
+                        <td class="data-label" style="color:#64748b; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; width: 120px; vertical-align: top; padding-top: 4px;">Localização</td>
+                        <td class="data-value" style="color:#0f172a; font-size:15px; font-weight:500; padding-top: 4px;">{{ city }}, {{ region }} - {{ country }}</td>
+                      </tr>
+                    </table>
+
+                    <!-- Linha 4: Navegador -->
+                    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="data-row">
+                      <tr>
+                        <td class="data-label" style="color:#64748b; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; width: 120px; vertical-align: top; padding-top: 4px;">Navegador</td>
+                        <td class="data-value" style="color:#0f172a; font-size:15px; font-weight:500; padding-top: 4px;">{{ browser }}</td>
+                      </tr>
+                    </table>
+
+                    <!-- Linha 5: Dispositivo -->
+                    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td class="data-label" style="color:#64748b; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; width: 120px; vertical-align: top; padding-top: 4px;">Dispositivo</td>
+                        <td class="data-value" style="color:#0f172a; font-size:15px; font-weight:500; padding-top: 4px; margin-bottom: 0 !important;">{{ device }}</td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+              <!-- FIM DA CAIXA DE DETALHES -->
+
+              <!-- MENSAGEM DE AÇÃO -->
+              <p style="margin:0 0 24px; color:#475569; font-size:16px; line-height:1.6;">
+                Se foi você, nenhuma ação é necessária.
+              </p>
+
+              <p style="margin:0 0 32px; color:#b91c1c; font-size:16px; line-height:1.6; font-weight: 500;">
+                Se você <strong>não</strong> reconhece este acesso, sua conta pode estar comprometida.
+              </p>
+
+              <!-- Botão CTA (Call to Action) -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                <tr>
+                  <td align="center" style="border-radius: 6px; background-color: #0f172a; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <a href="https://app.veloma.com.br/alterar-senha" target="_blank" 
+                       style="display:inline-block; padding: 16px 32px; color:#ffffff; font-size:16px; font-weight:600; text-decoration:none; letter-spacing: 0.5px;">
+                      PROTEGER MINHA CONTA
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin-top: 16px; font-size: 13px; color: #94a3b8; text-align: center;">
+                <a href="https://app.veloma.com.br/alterar-senha" target="_blank" style="color: #94a3b8; text-decoration: underline;">Ou clique aqui se o botão não funcionar</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- ===== FOOTER ===== -->
+          <tr>
+            <td style="background-color:#f8fafc; padding: 32px 20px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin:0 0 8px; color:#64748b; font-size:14px; line-height:1.5;">
+                <strong>Veloma Contabilidade Ltda</strong><br>
+                CNPJ 00.000.000/0001-00
+              </p>
+              
+              <p style="margin:16px 0 8px; color:#94a3b8; font-size:12px; line-height:1.5;">
+                Esta é uma mensagem automática de segurança. Por favor, não responda este e-mail.
+              </p>
+              
+              <p style="margin:0; color:#cbd5e1; font-size:12px;">
+                © 2026 Veloma Contabilidade. Todos os direitos reservados.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- Fim do Container -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
