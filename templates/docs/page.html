@@ -2,14 +2,14 @@
 
 {% block content %}
 
+<!-- Título Dinâmico -->
 <h1>{{ title }}</h1>
 
-<hr>
+<hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
 
-<div>
-
-{{ content|safe }}
-
+<!-- Conteúdo Dinâmico (Vem do Banco de Dados/Markdown) -->
+<div style="color: #cbd5e1; line-height: 1.8;">
+    {{ content|safe }}
 </div>
 
 {% endblock %}
