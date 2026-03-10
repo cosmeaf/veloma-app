@@ -109,3 +109,29 @@ class HasRequiredPermission(BasePermission):
         except Exception:
             logger.exception("Erro inesperado em HasRequiredPermission")
             return False
+
+ 
+class IsOwnerOrAdmin(BasePermission):
+    """
+    Permite acesso ao owner do objeto ou superuser.
+    """
+
+    message = "Você não tem permissão para acessar este recurso."
+
+    def has_object_permission(self, request, view, obj):
+        try:
+            user = request.user
+
+            if not user or not user.is_authenticated:
+                return False
+
+            if user.is_superuser:
+                return True
+
+            owner = getattr(obj, "owner", None)
+
+            return owner == user
+
+        except Exception:
+            logger.exception("Erro em IsOwnerOrAdmin")
+            return False       

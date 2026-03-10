@@ -21,12 +21,17 @@ if "pytest" in sys.modules:
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool, default=False)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default="127.0.0.1,localhost")
+PUBLIC_BASE_URL = config("PUBLIC_BASE_URL")
+FRONTEND_BASE_URL = config("FRONTEND_BASE_URL")
 
 APPEND_SLASH = False
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 DJANGO_ENV = config("DJANGO_ENV", default="development")
+
+CONSENT_SECRET_KEY = config("CONSENT_SECRET_KEY")
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -39,9 +44,12 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
+    "clearcache",
     "storages",
     "authentication",
     "services",
+    "consents",
+    "user_profile",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +60,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "services.middleware.consent_enforcement.ConsentEnforcementMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -153,6 +162,14 @@ CELERY_TIMEZONE = TIME_ZONE
 
 CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", cast=bool)
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv(), default="")
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
 
 EMAIL_BACKEND = config("EMAIL_BACKEND")
 EMAIL_HOST = config("EMAIL_HOST")
@@ -174,6 +191,11 @@ LOGIN_ALERT_GEOLOOKUP_URL = config("LOGIN_ALERT_GEOLOOKUP_URL")
 LOGIN_ALERT_GEOLOOKUP_TIMEOUT = config("LOGIN_ALERT_GEOLOOKUP_TIMEOUT", cast=int)
 
 USER_PROFILE_ENCRYPTION_KEY = config("USER_PROFILE_ENCRYPTION_KEY")
+
+MINIO_ENDPOINT = config("MINIO_ENDPOINT")
+MINIO_ACCESS_KEY = config("MINIO_ACCESS_KEY")
+MINIO_SECRET_KEY = config("MINIO_SECRET_KEY")
+MINIO_SECURE = config("MINIO_SECURE", default=False, cast=bool)
 
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
